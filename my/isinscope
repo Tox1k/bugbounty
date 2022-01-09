@@ -1,0 +1,19 @@
+#!/usr/bin/env python
+
+import sys
+
+scope = []
+try:
+    with open("scope", "r") as file:
+        for line in file.read().split('\n'):
+            line = line.rstrip('\n').rstrip('\r')
+            scope.append(line)
+except FileNotFoundError:
+    print("no 'scope' file found in directory, create one or rename to 'scope'!")
+
+for domain in sys.stdin:
+    domain = domain.rstrip('\n').rstrip('\r')
+    for s in scope:
+        if domain.endswith(s):
+            print(domain)
+            break

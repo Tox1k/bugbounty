@@ -1,0 +1,16 @@
+#!/bin/bash
+while read domain
+do
+
+for cname in `dig @8.8.8.8 $domain cname +short`
+do
+    #ipaddress="$ipaddress$a,"
+    echo "$cname"
+done
+
+#for ns in `dig $domain ns +short`
+#do
+#    nameserver="$nameserver$ns,"
+#done
+#echo "$domain,$ipaddress,$nameserver"
+done
