@@ -7,6 +7,8 @@ try:
     with open("scope", "r") as file:
         for line in file.read().split('\n'):
             line = line.rstrip('\n').rstrip('\r')
+            if len(line) < 2:
+                continue
             scope.append(line)
 except FileNotFoundError:
     print("no 'scope' file found in directory, create one or rename to 'scope'!")
