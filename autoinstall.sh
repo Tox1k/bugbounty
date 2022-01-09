@@ -37,5 +37,5 @@ echo 'export PATH=${PATH}:/home/panda/go/bin' >> ~/.bashrc
 #'export GOPATH=~' >> ~/.bashrc
 mkdir ~/.opt
 mkdir ~/.opt/scripts
-cp -r my/* ~/.opt/scripts
+cp -r scripts/* ~/.opt/scripts
 echo "[*]DONE![*]"
