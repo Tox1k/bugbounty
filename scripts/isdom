@@ -3,7 +3,7 @@
 import sys
 import validators
 
-for line in sys.stdin:
+def isdom(line):
     line = line.rstrip('\n').rstrip('\r')
     if "://" in line:
         line = line.split("://")[1] # discard protocol
@@ -17,6 +17,9 @@ for line in sys.stdin:
     if line.endswith("."):
         line = line[:-1] # discard ending .
 
+    if line.endswith(","):
+        line = line[:-1] # discard ending ,
+
     if line.startswith("*"):
         line = line[1:] # discard starting *
 
@@ -25,3 +28,8 @@ for line in sys.stdin:
 
     if validators.domain(line):
         print(line)
+
+for line in sys.stdin:
+    for piece in line.split(' '):
+        for piece2 in piece.split(','):
+            isdom(piece2)
