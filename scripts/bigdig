@@ -5,7 +5,7 @@ do
 for cname in `dig @8.8.8.8 $domain cname +short`
 do
     #ipaddress="$ipaddress$a,"
-    echo "$cname"
+    echo "$domain>$cname"
 done
 
 #for ns in `dig $domain ns +short`
