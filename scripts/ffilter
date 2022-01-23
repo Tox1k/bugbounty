@@ -1,0 +1,60 @@
+#!/bin/env python
+
+import sys
+import json
+
+help = False
+if len(sys.argv) > 1:
+    p = sys.argv[1].strip()
+    if p == 'help' or p == '-h' or p == '--help':
+        help = True
+
+#if len(sys.argv) == 1:
+#    help = True
+
+if sys.stdin.isatty(): #not piped in
+    help = True
+
+if help == True:
+    print('[*]ffuf result pretty print to extract url and status code!')
+    print('output format: \'url status_code\' (there\'s a space in between)\n')
+    print(f'usage: cat FFUF_JSON_RES | {sys.argv[0]} (just pipe into me!)')
+    quit()
+
+def pretty_parse(myjson):
+    #print(myjson.keys())
+    #quit()
+    if "results" not in myjson:
+        quit()
+    data = myjson['results']
+    result = {}
+    for obj in data:
+        #print(obj)
+        result[obj['url']]=obj['status']
+    
+    return result
+    return {"google.com":"200"}
+
+def parse_file(file):
+    d = json.loads(file)
+    res = pretty_parse(d)
+    for url,status in res.items():
+        print(f"{url} {status}")
+
+flag = False
+file = ''
+for line in sys.stdin.readline():
+    for c in line:
+        if flag == True:
+            if c == '{': #if }{ then it's a new file
+                parse_file(file)
+                file = ''
+                flag = False
+            else: # if } and something other then keep going
+                flag = False
+    
+        if c == '}':
+            flag = True
+        file += c
+
+parse_file(file)
